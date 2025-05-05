@@ -389,48 +389,54 @@ The hybrid architecture is key to achieving zero-downtime migration.
 
 ```mermaid
 graph LR
-    A[User] --> B(Load Balancer);
-    B --> C{API Gateway};
-
-    C --> D[Legacy PHP Frontend];
-    C --> E[New .NET Frontend];
-
-    D --> F[Legacy PHP Backend];
-    E --> G[New .NET Backend];
-
-    F --> H[Legacy MySQL Database];
-    G --> I[New SQL Server Database];
-
-    F --> J[External Services];
-    G --> J;
-
+    A[User] --> B(Load Balancer)
+    B --> C{API Gateway}
+    
+    C --> D[Legacy PHP Frontend]
+    C --> E[New .NET Frontend]
+    
+    D --> F[Legacy PHP Backend]
+    E --> G[New .NET Backend]
+    
+    F --> H[Legacy MySQL Database]
+    G --> I[New SQL Server Database]
+    
+    F --> J[External Services]
+    G --> J
+    
     H -- CDC --> K[CDC Capture Mechanism]
-    K --> L[Message Queue (e.g., Kafka)]
-    L --> M[Data Synchronization Service (.NET)]
+    K --> L[Message Queue]
+    L --> M[Data Sync Service]
     M --> I
-
-    G -- Reads --> I;
-    F -- Writes/Reads --> H;
-
+    
+    G -- Reads --> I
+    F -- Writes/Reads --> H
+    
     subgraph Frontend
-        D; E
+        D
+        E
     end
-
+    
     subgraph Backend
-       F; G
+        F
+        G
     end
-
+    
     subgraph Databases
-       H; I
+        H
+        I
     end
-
-    subgraph Data Sync
-       K; L; M
+    
+    subgraph Data_Sync
+        K
+        L
+        M
     end
-
-    subgraph External Integrations
+    
+    subgraph External_Integrations
         J
     end
+
 ```
 
 **Explanation:**
